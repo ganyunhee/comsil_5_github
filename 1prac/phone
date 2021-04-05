@@ -1,0 +1,26 @@
+count=1
+# TEST INPUT:
+# echo $# $@
+# echo $name
+
+if [ $# -ge 1 ]
+# if arg# >= 1; i.e. $1, $2 $...
+then
+	for input in $@ 
+	# all words in $@ are assigned to input
+	do
+		name+=$input
+		if [ $# -gt $count ]
+		# if arg# > count
+		then name+="|"
+		#echo $name --> result: 홍길동|  **adds bar to name
+		count+=1
+		fi
+	done
+
+	egrep "($name)" mydata | awk -f display.awk
+	# print according to format from mydata file
+else
+	echo "Usage: phone searchfor [...searchfor]"
+	echo "(You didn't tell me what you want to search for.)"
+fi
